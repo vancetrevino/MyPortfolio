@@ -1,0 +1,140 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Bookings";
+}
+
+<div class="container">
+    <nav class="secondary-navbar navbar navbar-expand-sm navbar-dark bg-dark box-shadow">
+        <a class="navbar-brand" asp-controller="Bookings" asp-action="BookingsHomePage">
+            <i class="fa-regular fa-calendar fa-lg"></i>
+        </a>
+        <i class="bi bi-calendar-check text-light"></i>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse">
+            <div class="navbar-collapse justify-content-end">
+                <a class="nav-item nav-link text-light" href="#"><i class="fa-solid fa-location-dot fa-lg"></i> Location</a>
+            </div>
+            <div class="navbar-collapse justify-content-end">
+                <a class="nav-item nav-link text-light" href="#">Sign In</a>
+                <a class="nav-item nav-link text-light" href="#"><i class="fa-solid fa-cart-arrow-down fa-lg"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="">
+        <div class="employee-title d-flex flex-wrap justify-content-between">
+            <h2>Choose Employee:</h2>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownEmployeeFilterButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filter/Sort By...
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownEmployeeFilterButton">
+                    <a class="dropdown-item" href="#">Sort By Name</a>
+                    <a class="dropdown-item" href="#">Filter By Gender</a>
+                    <a class="dropdown-item" href="#">Filter By Service Offered</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="employeeCardArea">
+            <div class="d-flex flex-wrap justify-content-between">
+                <div class="col-5 col-sm-5 col-md-5 col-lg-3 employee-card">
+                    <div class="card">
+                        <img class="card-img-top" src="..." alt="Employee Face Img 01" />
+                        <div class="card-body">
+                            <div class="employee-header d-flex justify-content-between">
+                                <h4 class="card-title">Employee 01</h4>
+                                <a class="text-dark btn" href="#">
+                                    <i class="fa-brands fa-instagram fa-xl"></i>
+                                </a>
+                            </div>
+                            <div class="employee-body">
+                                <p class="card-text">
+                                    Services offered here.....
+                                </p>
+                                <p class="card-text">
+                                    Next Availability:
+                                </p>
+                                <a class="btn btn-primary">Book now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-5 col-sm-5 col-md-5 col-lg-3 employee-card">
+                    <div class="card">
+                        <img class="card-img-top" src="..." alt="Employee Face Img 02" />
+                        <div class="card-body">
+                            <div class="employee-header d-flex justify-content-between">
+                                <h4 class="card-title">Employee 02</h4>
+                                <a class="text-dark btn" href="#">
+                                    <i class="fa-brands fa-instagram fa-xl"></i>
+                                </a>
+                            </div>
+                            <div class="employee-body">
+                                <p class="card-text">
+                                    Services offered here.....
+                                </p>
+                                <p class="card-text">
+                                    Next Availability:
+                                </p>
+                                <a class="btn btn-primary">Book now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-5 col-sm-5 col-md-5 col-lg-3 employee-card">
+                    <div class="card">
+                        <img class="card-img-top" src="..." alt="Employee Face Img 03" />
+                        <div class="card-body">
+                            <div class="employee-header d-flex justify-content-between">
+                                <h4 class="card-title">Employee 03</h4>
+                                <a class="text-dark btn" href="#">
+                                    <i class="fa-brands fa-instagram fa-xl"></i>
+                                </a>
+                            </div>
+                            <div class="employee-body">
+                                <p class="card-text">
+                                    Services offered here.....
+                                </p>
+                                <p class="card-text">
+                                    Next Availability:
+                                </p>
+                                <a class="btn btn-primary">Book now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-5 col-sm-5 col-md-5 col-lg-3 employee-card">
+                    <div class="card">
+                        <img class="card-img-top" src="..." alt="Employee Face Img 04" />
+                        <div class="card-body">
+                            <div class="employee-header d-flex justify-content-between">
+                                <h4 class="card-title">Employee 04</h4>
+                                <a class="text-dark btn" href="#">
+                                    <i class="fa-brands fa-instagram fa-xl"></i>
+                                </a>
+                            </div>
+                            <div class="employee-body">
+                                <p class="card-text">
+                                    Services offered here.....
+                                </p>
+                                <p class="card-text">
+                                    Next Availability:
+                                </p>
+                                <a class="btn btn-primary">Book now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

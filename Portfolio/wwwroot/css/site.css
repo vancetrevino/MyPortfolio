@@ -25,12 +25,7 @@ body {
 
 header {
     margin: 0;
-}
-
-/*.container {
-    max-width: 124rem;
-    margin: 0 auto;
-}*/
+}d
 
 .navbar {
     margin-bottom: 0;
@@ -50,4 +45,20 @@ header {
 
 .btn-fixed-width {
     width: 150px;
+}
+
+
+
+
+/* -- Bookings website CSS -- */
+.secondary-navbar {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border-radius: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.employee-card {
+    margin: 25px;
 }
