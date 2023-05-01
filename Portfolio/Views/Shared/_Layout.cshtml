@@ -31,7 +31,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-controller="Projects" asp-action="Projects">All Projects</a>
-                                <a class="dropdown-item" asp-controller="Bookings" asp-action="BookingsHomePage">Bookings Project</a>
+                                <a class="dropdown-item bookingProjectNavButton" asp-controller="Bookings" asp-action="ChooseEmployee">Bookings Project</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-controller="Projects" asp-action="Projects">Something else here</a>
                             </div>
@@ -45,7 +45,7 @@
         </nav>
     </header>
     <div>
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3 vh-100 w-100">            
             @RenderBody()
         </main>
     </div>

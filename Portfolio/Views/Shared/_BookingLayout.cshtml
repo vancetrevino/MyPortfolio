@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "_BookingLayout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" id="bookingsHomePageNavBar">
+    <nav class="secondary-navbar navbar navbar-expand-sm navbar-dark bg-dark box-shadow">
+        <a class="navbar-brand" asp-controller="Bookings" asp-action="ChooseEmployee">
+            <i class="fa-regular fa-calendar fa-lg"></i>
+        </a>
+        <a class="nav-item" asp-controller="Admin" asp-action="AdminPage">Admin Page</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse">
+            <div class="navbar-collapse justify-content-end">
+                <a class="nav-item nav-link text-light" href="#"><i class="fa-solid fa-location-dot fa-lg"></i> Location</a>
+            </div>
+            <div class="navbar-collapse justify-content-end">
+                <a class="nav-item nav-link text-light" href="#">Sign In</a>
+                <a class="nav-item nav-link text-light" href="#"><i class="fa-solid fa-cart-arrow-down fa-lg"></i></a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div>
+    <main role="main" class="vh-100 h-100">
+        @RenderBody()
+    </main>
+</div>
+

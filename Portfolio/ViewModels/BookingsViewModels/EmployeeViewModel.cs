@@ -9,5 +9,7 @@ namespace Portfolio.ViewModels.BookingsViewModels
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public ICollection<Service> Services { get; set; }
+        public DateTime? NextAvailability { get; set; }
+        public bool HasAdminRights { get; set; }
     }
 }

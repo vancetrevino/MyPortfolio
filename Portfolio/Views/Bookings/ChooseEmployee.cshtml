@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Employee>
+@{
+    ViewData["Title"] = "Bookings";
+    Layout = "~/Views/Shared/_BookingLayout.cshtml";
+}
+
+<div class="container">
+    <div class="employee-title d-flex flex-wrap justify-content-between">
+        <h2>Choose Employee:</h2>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownEmployeeFilterButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Filter/Sort By...
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownEmployeeFilterButton">
+                <a class="dropdown-item" href="#">Sort By Name</a>
+                <a class="dropdown-item" href="#">Filter By Gender</a>
+                <a class="dropdown-item" href="#">Filter By Service Offered</a>
+            </div>
+        </div>
+
+        <div id="employeeCardArea">
+            <div class="d-flex flex-wrap justify-content-between">
+                @foreach (var e in Model)
+                {
+                    <div class="col-5 col-sm-5 col-md-5 col-lg-3 employee-card">
+                        <div class="card">
+                            <img class="card-img-top" src="#" alt="@e.FirstName Picture" />
+                            <div class="card-body">
+                                <div class="employee-header d-flex justify-content-between">
+                                    <h4 class="card-title">@e.FirstName @e.LastName</h4>
+                                    <a class="text-dark btn" href="#">
+                                        <i class="fa-brands fa-instagram fa-xl"></i>
+                                    </a>
+                                </div>
+                                <div class="employee-body">
+                                    <p class="card-text">
+                                        Services offered here.....
+                                    </p>
+                                    <p class="card-text">
+                                        Next Availability:
+                                    </p>
+                                    <a class="btn btn-primary">Book now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
