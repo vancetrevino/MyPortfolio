@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "_AdminLayout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex flex-nowrap w-100 vh-100">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark align-items-stretch">
+        <h5 class="align-items-center mb-5 mb-md-0 me-md-auto text-white text-decoration-none">
+            Bookings Admin Dashboard
+        </h5>
+        <hr />
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link active text-white" asp-area="" asp-controller="Admin" asp-action="AdminPage">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="AdminEmployeesPage">Employees</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="AdminServicesPage">Services</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="AdminPage">Next Item</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="AdminPage">Next Item</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="AdminShopSettings">Shop Settings</a>
+            </li>
+        </ul>
+    </div>
+    <div class="d-flex flex-column flex-fill flex-grow-1 p-3 vh-100 bg-light">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+</div>
+
