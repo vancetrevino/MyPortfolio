@@ -41,6 +41,30 @@ namespace Portfolio.Controllers
             return PartialView("_AddEmployeePartialView", employee);
         }
 
+        [HttpPost]
+        public IActionResult CreateNewEmployee(Employee employee)
+        {
+            _context.Employees.Add(employee);
+            _context.SaveChanges();
+
+            return RedirectToAction("AdminEmployeePage", "Admin");
+        }
+
+        public IActionResult EditEmployee(int id)
+        {
+            Employee employee = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
+
+            return PartialView("_EditEmployeePartialView", employee);
+        }
+
+        [HttpPost]
+        public IActionResult EditEmployee(Employee employee)
+        {
+            _context.Employees.Update(employee);
+            _context.SaveChanges();
+            return RedirectToAction("AdminEmployeePage", "Admin");
+        }
+
         public IActionResult AdminServicesPage()
         {
             return View();
