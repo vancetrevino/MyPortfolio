@@ -12,5 +12,6 @@ namespace Portfolio.Data
 
         public DbSet<Models.BookingsModels.Employee> Employees { get; set; }
         public DbSet<Models.BookingsModels.Service> Services { get; set; }
+        public DbSet<Models.BookingsModels.ServiceGroup> ServiceGroups { get; set; }
     }
 }

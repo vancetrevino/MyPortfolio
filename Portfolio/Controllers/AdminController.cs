@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Data;
 using Portfolio.Models.BookingsModels;
+using Portfolio.ViewModels.BookingsViewModels;
 
 namespace Portfolio.Controllers
 {
@@ -17,11 +18,12 @@ namespace Portfolio.Controllers
         // GET: AdminController
         public IActionResult AdminPage()
         {
-            var employees = from e in _context.Employees
-                            orderby e.LastName
-                            select e;
+            //var employees = from e in _context.Employees
+            //                orderby e.LastName
+            //                select e;
 
-            return View(employees.ToList());
+            //return View(employees.ToList());
+            return View();
         }
 
         [HttpGet]
@@ -31,7 +33,17 @@ namespace Portfolio.Controllers
                             orderby e.LastName
                             select e;
 
-            return View(employees.ToList());
+            var services = from s in _context.Services
+                           orderby s.ServiceGroup
+                           select s;
+
+            var employeeViewModel = new EmployeeViewModel
+            {
+                Employees = employees,
+                Services = services
+            };
+
+            return View(employeeViewModel);
         }
 
         //[HttpGet]
@@ -82,7 +94,17 @@ namespace Portfolio.Controllers
 
         public IActionResult AdminServicesPage()
         {
-            return View();
+            var services = from e in _context.Services
+                            orderby e.ServiceGroup
+                            select e;
+
+            return View(services.ToList());
+        }
+
+        public IActionResult EditEmployeeServices(EmployeeViewModel viewModel)
+        {
+            //var viewModel = new EmployeeViewModel();
+            return PartialView("_EmployeeServicesPartialView", viewModel);
         }
 
         public IActionResult AdminShopSettings()
