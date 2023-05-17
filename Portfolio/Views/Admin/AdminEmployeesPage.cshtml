@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Employee>
+﻿@model EmployeeViewModel
 @{
-    ViewData["Title"] = "AdminPage";
+    ViewData["Title"] = "AdminEmployeesPage";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div id="modal-placeholder"></div>
+@*<div id="modal-placeholder"></div>*@
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center">
@@ -29,14 +29,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var e in Model)
+            @foreach (var e in Model.Employees)
             {
                 <tr class="w-auto align-middle">
                     <td class="w-auto">@e.FirstName</td>
                     <td class="w-auto">@e.LastName</td>
                     <td class="w-auto">@e.EmailAddress</td>
                     <td class="w-auto">@e.Gender</td>
-                    <td class="w-auto">Services?</td>
+                    <td class="w-auto">
+                        <a class="m-1 btn" data-bs-toggle="modal" data-bs-target="@("#employeeServicesModal-"+e.EmployeeId)" data-bs-url="@Url.Action($"EditEmployeeServices/{e.EmployeeId}")">
+                            <i class="fa-solid fa-book-open-reader fa-xl"></i>
+                        </a>
+                        @await Html.PartialAsync("~/Views/Admin/_EmployeeServicesPartialView.cshtml", e)
+                    </td>
                     <td class="w-auto">Schedules?</td>
                     <td>
                         <a class="m-1 btn btn-warning" data-bs-toggle="modal" data-bs-target="@("#editEmployeeModal-"+e.EmployeeId)" data-bs-url="@Url.Action($"EditEmployee/{e.EmployeeId}")">Edit Employee</a>

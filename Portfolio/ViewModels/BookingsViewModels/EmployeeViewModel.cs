@@ -5,11 +5,24 @@ namespace Portfolio.ViewModels.BookingsViewModels
     public class EmployeeViewModel
     {
         public int EmployeeId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string EmailAddress { get; set; }
-        public ICollection<Service> Services { get; set; }
-        public DateTime? NextAvailability { get; set; }
-        public bool HasAdminRights { get; set; }
+        public IEnumerable<Employee> Employees { get; set; }
+        public IEnumerable<Service> Services { get; set; }
+        public IEnumerable<ServiceGroup> ServicesGroup { get; set; }
     }
+
+    //public class Service
+    //{
+    //    public int Id { get; set; }
+    //    public ServiceGroup ServiceGroup { get; set; }
+    //    public string ServiceName { get; set; }
+    //    public string ServiceDescription { get; set; }
+    //    public int ServicePrice { get; set; }
+    //    public int ServiceDurationInMinutes { get; set; }
+    //}
+
+    //public class ServiceGroup
+    //{
+    //    public int Id { get; set; }
+    //    public string ServiceGroupName { get; set; }
+    //}
 }
