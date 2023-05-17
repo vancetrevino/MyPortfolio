@@ -31,7 +31,7 @@
         <tbody>
             @foreach (var e in Model)
             {
-                <tr class="w-auto">
+                <tr class="w-auto align-middle">
                     <td class="w-auto">@e.FirstName</td>
                     <td class="w-auto">@e.LastName</td>
                     <td class="w-auto">@e.EmailAddress</td>
@@ -41,8 +41,9 @@
                     <td>
                         <a class="m-1 btn btn-warning" data-bs-toggle="modal" data-bs-target="@("#editEmployeeModal-"+e.EmployeeId)" data-bs-url="@Url.Action($"EditEmployee/{e.EmployeeId}")">Edit Employee</a>
                         @await Html.PartialAsync("~/Views/Admin/_EditEmployeePartialView.cshtml", e)
-                        
-                        <a class="m-1 btn btn-danger">Delete Employee</a>
+
+                        <a class="m-1 btn btn-danger" data-bs-toggle="modal" data-bs-target="@("#deleteEmployeeModal-"+e.EmployeeId)" data-bs-url="@Url.Action($"DeleteEmployee/{e.EmployeeId}")">Delete Employee</a>
+                        @await Html.PartialAsync("~/Views/Admin/_DeleteEmployeePartialView.cshtml", e)
                     </td>
                 </tr>
             }
