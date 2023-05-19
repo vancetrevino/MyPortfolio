@@ -1,11 +1,53 @@
-﻿@model IEnumerable<Employee>
+﻿@model IEnumerable<Service>
 @{
-    ViewData["Title"] = "AdminPage";
+    ViewData["Title"] = "AdminServicesPage";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 
+
 <div class="container-fluid">
-    <h2>Welcome, Admin</h2>
-    <p>To Add: full calendar showing which employees are working which dates.</p>
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="">Employee List</h3>
+        <div class="p-3 text-dark">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                <i class="fa-solid fa-square-plus fa-xl"></i> Add Employee
+            </button>
+        </div>
+    </div>
+
+    <table class="table table-responsive table-striped w-100" id="adminEmployeesList">
+        <thead>
+            <tr class="w-auto">
+                <th class="w-auto">Service Group</th>
+                <th class="w-auto">Service Name</th>
+                <th class="w-auto">Description</th>
+                <th class="w-auto">Price</th>
+                <th class="w-auto">Duration</th>
+                <th>Service Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr class="w-auto align-middle">
+                    <td class="w-auto">@s.ServiceGroup</td>
+                    <td class="w-auto">@s.ServiceName</td>
+                    <td class="w-auto">@s.ServiceDescription</td>
+                    <td class="w-auto">@s.ServicePrice</td>
+                    <td class="w-auto">@s.ServiceDurationInMinutes</td>
+                    <td>
+                        <a class="m-1 btn btn-warning" data-bs-toggle="modal" data-bs-target="" data-bs-url="">Edit Service</a>
+                        @*@await Html.PartialAsync("~/Views/Admin/_EditEmployeePartialView.cshtml", e)*@
+
+                        <a class="m-1 btn btn-danger" data-bs-toggle="modal" data-bs-target="" data-bs-url="">Delete Service</a>
+                        @*@await Html.PartialAsync("~/Views/Admin/_DeleteEmployeePartialView.cshtml", e)*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+
+@*@await Html.PartialAsync("~/Views/Admin/_AddEmployeePartialView.cshtml", new Employee())*@

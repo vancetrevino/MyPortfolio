@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Data;
 using Portfolio.Models.BookingsModels;
+using Portfolio.ViewModels.BookingsViewModels;
 
 namespace Portfolio.Controllers
 {
@@ -17,11 +18,12 @@ namespace Portfolio.Controllers
         // GET: AdminController
         public IActionResult AdminPage()
         {
-            var employees = from e in _context.Employees
-                            orderby e.LastName
-                            select e;
+            //var employees = from e in _context.Employees
+            //                orderby e.LastName
+            //                select e;
 
-            return View(employees.ToList());
+            //return View(employees.ToList());
+            return View();
         }
 
         [HttpGet]
@@ -31,7 +33,17 @@ namespace Portfolio.Controllers
                             orderby e.LastName
                             select e;
 
-            return View(employees.ToList());
+            var services = from s in _context.Services
+                           orderby s.ServiceGroup
+                           select s;
+
+            var employeeViewModel = new EmployeeViewModel
+            {
+                Employees = employees,
+                Services = services
+            };
+
+            return View(employeeViewModel);
         }
 
         //[HttpGet]
@@ -41,9 +53,58 @@ namespace Portfolio.Controllers
             return PartialView("_AddEmployeePartialView", employee);
         }
 
+        [HttpPost]
+        public IActionResult CreateNewEmployee(Employee employee)
+        {
+            _context.Employees.Add(employee);
+            _context.SaveChanges();
+
+            return RedirectToAction("AdminEmployeesPage", "Admin");
+        }
+
+        public IActionResult EditEmployee(int id)
+        {
+            Employee employee = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
+
+            return PartialView("_EditEmployeePartialView", employee);
+        }
+
+        [HttpPost]
+        public IActionResult EditEmployee(Employee employee)
+        {
+            _context.Employees.Update(employee);
+            _context.SaveChanges();
+            return RedirectToAction("AdminEmployeesPage", "Admin");
+        }
+
+        public IActionResult DeleteEmployee(int id)
+        {
+            Employee employee = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
+
+            return PartialView("_DeleteEmployeePartialView", employee);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteEmployee(Employee employee)
+        {
+            _context.Employees.Remove(employee);
+            _context.SaveChanges();
+            return RedirectToAction("AdminEmployeesPage", "Admin");
+        }
+
         public IActionResult AdminServicesPage()
         {
-            return View();
+            var services = from e in _context.Services
+                            orderby e.ServiceGroup
+                            select e;
+
+            return View(services.ToList());
+        }
+
+        public IActionResult EditEmployeeServices(EmployeeViewModel viewModel)
+        {
+            //var viewModel = new EmployeeViewModel();
+            return PartialView("_EmployeeServicesPartialView", viewModel);
         }
 
         public IActionResult AdminShopSettings()
@@ -51,73 +112,6 @@ namespace Portfolio.Controllers
             return View();
         }
 
-        //// GET: AdminController/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
-
-        //// GET: AdminController/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: AdminController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: AdminController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: AdminController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: AdminController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: AdminController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        
     }
 }
