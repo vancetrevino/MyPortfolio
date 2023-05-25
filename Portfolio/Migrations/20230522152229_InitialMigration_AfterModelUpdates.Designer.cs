@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio.Data;
 
@@ -11,9 +12,11 @@ using Portfolio.Data;
 namespace Portfolio.Migrations
 {
     [DbContext(typeof(PortfolioContext))]
-    partial class PortfolioContextModelSnapshot : ModelSnapshot
+    [Migration("20230522152229_InitialMigration_AfterModelUpdates")]
+    partial class InitialMigration_AfterModelUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,16 +61,24 @@ namespace Portfolio.Migrations
 
             modelBuilder.Entity("Portfolio.Models.BookingsModels.EmployeeServiceAssignment", b =>
                 {
-                    b.Property<int>("EmployeeId")
+                    b.Property<int>("EmployeeId_Assignment")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServiceId")
+                    b.Property<int>("ServiceId_Assignment")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("ServiceAssignmentId")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeeId", "ServiceId");
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeId_Assignment", "ServiceId_Assignment");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("ServiceId");
 
@@ -82,6 +93,9 @@ namespace Portfolio.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"));
 
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ServiceDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -90,6 +104,9 @@ namespace Portfolio.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ServiceGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ServiceId1")
                         .HasColumnType("int");
 
                     b.Property<string>("ServiceName")
@@ -101,7 +118,11 @@ namespace Portfolio.Migrations
 
                     b.HasKey("ServiceId");
 
+                    b.HasIndex("EmployeeId");
+
                     b.HasIndex("ServiceGroupId");
+
+                    b.HasIndex("ServiceId1");
 
                     b.ToTable("Service", (string)null);
                 });
@@ -144,11 +165,19 @@ namespace Portfolio.Migrations
 
             modelBuilder.Entity("Portfolio.Models.BookingsModels.Service", b =>
                 {
+                    b.HasOne("Portfolio.Models.BookingsModels.Employee", null)
+                        .WithMany("Services")
+                        .HasForeignKey("EmployeeId");
+
                     b.HasOne("Portfolio.Models.BookingsModels.ServiceGroup", "ServiceGroup")
                         .WithMany("Services")
                         .HasForeignKey("ServiceGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Portfolio.Models.BookingsModels.Service", null)
+                        .WithMany("Services")
+                        .HasForeignKey("ServiceId1");
 
                     b.Navigation("ServiceGroup");
                 });
@@ -156,11 +185,15 @@ namespace Portfolio.Migrations
             modelBuilder.Entity("Portfolio.Models.BookingsModels.Employee", b =>
                 {
                     b.Navigation("EmployeeServices");
+
+                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("Portfolio.Models.BookingsModels.Service", b =>
                 {
                     b.Navigation("EmployeeServices");
+
+                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("Portfolio.Models.BookingsModels.ServiceGroup", b =>

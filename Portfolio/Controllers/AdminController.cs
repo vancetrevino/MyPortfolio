@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Portfolio.Data;
 using Portfolio.Models.BookingsModels;
 using Portfolio.ViewModels.BookingsViewModels;
+using System.Net;
 
 namespace Portfolio.Controllers
 {
@@ -33,17 +35,18 @@ namespace Portfolio.Controllers
                             orderby e.LastName
                             select e;
 
-            var services = from s in _context.Services
-                           orderby s.ServiceGroup
-                           select s;
+            var employeeViewModelList = new List<EmployeeViewModel>();
 
-            var employeeViewModel = new EmployeeViewModel
+            foreach (var em in employees)
             {
-                Employees = employees,
-                Services = services
-            };
+                var employeeVM = new EmployeeViewModel
+                {
+                    Employee = em
+                };
+                employeeViewModelList.Add(employeeVM);
+            }
 
-            return View(employeeViewModel);
+            return View(employeeViewModelList);
         }
 
         //[HttpGet]
@@ -62,7 +65,7 @@ namespace Portfolio.Controllers
             return RedirectToAction("AdminEmployeesPage", "Admin");
         }
 
-        public IActionResult EditEmployee(int id)
+        public IActionResult EditEmployee(int? id)
         {
             Employee employee = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
 
@@ -77,7 +80,7 @@ namespace Portfolio.Controllers
             return RedirectToAction("AdminEmployeesPage", "Admin");
         }
 
-        public IActionResult DeleteEmployee(int id)
+        public IActionResult DeleteEmployee(int? id)
         {
             Employee employee = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
 
@@ -95,16 +98,32 @@ namespace Portfolio.Controllers
         public IActionResult AdminServicesPage()
         {
             var services = from e in _context.Services
-                            orderby e.ServiceGroup
-                            select e;
+                           orderby e.ServiceGroup
+                           select e;
 
             return View(services.ToList());
         }
 
-        public IActionResult EditEmployeeServices(EmployeeViewModel viewModel)
+        public IActionResult EditEmployeeServices(int? id)
         {
-            //var viewModel = new EmployeeViewModel();
-            return PartialView("_EmployeeServicesPartialView", viewModel);
+            if (id == null)
+            {
+                //return new HttpStatusCode();
+            }
+
+            var employeeViewModel = new EmployeeViewModel
+            {
+                Employee = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault()
+            };
+
+            if (employeeViewModel == null)
+            {
+                //return HttpNotFound();
+            }
+
+            employeeViewModel.AllServices = _context.Services.ToList();
+
+            return PartialView("_EmployeeServicesPartialView", employeeViewModel);
         }
 
         public IActionResult AdminShopSettings()
