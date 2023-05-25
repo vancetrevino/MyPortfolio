@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio.Data;
 
@@ -11,9 +12,11 @@ using Portfolio.Data;
 namespace Portfolio.Migrations
 {
     [DbContext(typeof(PortfolioContext))]
-    partial class PortfolioContextModelSnapshot : ModelSnapshot
+    [Migration("20230522152520_FixingServiceIdIssue")]
+    partial class FixingServiceIdIssue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace Portfolio.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EmployeeService", b =>
+                {
+                    b.Property<int>("EmployeesEmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServicesServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeesEmployeeId", "ServicesServiceId");
+
+                    b.HasIndex("ServicesServiceId");
+
+                    b.ToTable("EmployeeService");
+                });
 
             modelBuilder.Entity("Portfolio.Models.BookingsModels.Employee", b =>
                 {
@@ -121,6 +139,21 @@ namespace Portfolio.Migrations
                     b.HasKey("ServiceGroupId");
 
                     b.ToTable("ServiceGroup", (string)null);
+                });
+
+            modelBuilder.Entity("EmployeeService", b =>
+                {
+                    b.HasOne("Portfolio.Models.BookingsModels.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeesEmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Portfolio.Models.BookingsModels.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Portfolio.Models.BookingsModels.EmployeeServiceAssignment", b =>

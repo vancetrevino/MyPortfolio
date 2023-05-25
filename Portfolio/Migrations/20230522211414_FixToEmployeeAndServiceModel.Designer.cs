@@ -12,8 +12,8 @@ using Portfolio.Data;
 namespace Portfolio.Migrations
 {
     [DbContext(typeof(PortfolioContext))]
-    [Migration("20230517034446_ServicesAndServiceGroupsUpdate")]
-    partial class ServicesAndServiceGroupsUpdate
+    [Migration("20230522211414_FixToEmployeeAndServiceModel")]
+    partial class FixToEmployeeAndServiceModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,19 +56,34 @@ namespace Portfolio.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employee", (string)null);
+                });
+
+            modelBuilder.Entity("Portfolio.Models.BookingsModels.EmployeeServiceAssignment", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceAssignmentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("EmployeeServiceAssignment", (string)null);
                 });
 
             modelBuilder.Entity("Portfolio.Models.BookingsModels.Service", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ServiceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"));
 
                     b.Property<string>("ServiceDescription")
                         .IsRequired()
@@ -77,9 +92,8 @@ namespace Portfolio.Migrations
                     b.Property<int>("ServiceDurationInMinutes")
                         .HasColumnType("int");
 
-                    b.Property<string>("ServiceGroup")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ServiceGroupId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ServiceName")
                         .IsRequired()
@@ -88,38 +102,71 @@ namespace Portfolio.Migrations
                     b.Property<int>("ServicePrice")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ServiceId");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("ServiceGroupId");
 
-                    b.ToTable("Services");
+                    b.ToTable("Service", (string)null);
                 });
 
             modelBuilder.Entity("Portfolio.Models.BookingsModels.ServiceGroup", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ServiceGroupId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceGroupId"));
 
                     b.Property<string>("ServiceGroupName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ServiceGroupId");
 
-                    b.ToTable("ServiceGroups");
+                    b.ToTable("ServiceGroup", (string)null);
+                });
+
+            modelBuilder.Entity("Portfolio.Models.BookingsModels.EmployeeServiceAssignment", b =>
+                {
+                    b.HasOne("Portfolio.Models.BookingsModels.Employee", "Employee")
+                        .WithMany("EmployeeServices")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Portfolio.Models.BookingsModels.Service", "Service")
+                        .WithMany("EmployeeServices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("Portfolio.Models.BookingsModels.Service", b =>
                 {
-                    b.HasOne("Portfolio.Models.BookingsModels.Employee", null)
+                    b.HasOne("Portfolio.Models.BookingsModels.ServiceGroup", "ServiceGroup")
                         .WithMany("Services")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("ServiceGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ServiceGroup");
                 });
 
             modelBuilder.Entity("Portfolio.Models.BookingsModels.Employee", b =>
+                {
+                    b.Navigation("EmployeeServices");
+                });
+
+            modelBuilder.Entity("Portfolio.Models.BookingsModels.Service", b =>
+                {
+                    b.Navigation("EmployeeServices");
+                });
+
+            modelBuilder.Entity("Portfolio.Models.BookingsModels.ServiceGroup", b =>
                 {
                     b.Navigation("Services");
                 });
