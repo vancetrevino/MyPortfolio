@@ -37,12 +37,12 @@
                             @foreach (var e in System.Enum.GetValues(typeof(gender)).OfType<gender>())
                             {
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" asp-for="Employee.Gender" class="form-check-input" name="Gender" value="@((int)e)" checked="@(e == Model?.Employee.Gender)" />
+                                    <input type="radio" asp-for="Employee.Gender" class="form-check-input" name="Gender_@e" value="@((int)e)" checked="@(e == Model?.Employee.Gender)" />
                                     <label asp-for="Employee.Gender" class="form-check-label">@e</label>
                                 </div>
                             }
+                            @*<span asp-validation-for="Employee.Gender" class="text-danger"></span>*@
                         </div>
-                        <span asp-validation-for="Employee.Gender" class="text-danger"></span>
                     </fieldset>
                     <div class="form-group row my-3">
                         <div class="col-sm-4">Give Admin Rights?</div>

@@ -17,22 +17,27 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="@Model.Employee.EmployeeId" />
                     <div class="form-group my-1">
+                        @if (Model.Employee.EmployeeServices == null)
+                        {
+                            <p>This employee is currently not signed up for any services.</p>
+                        }
                         @foreach (var e in Model.AllServices)
                         {
-                            @if (Model.Employee.EmployeeServices == null)
-                            {
-                                <p>This employee is currently not signed up for any services.</p>
-                            }
-                            else
-                            {
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <input asp-for="Employee.EmployeeServices" class="form-check-input" type="checkbox" id="@e.ServiceId">
-                                        <label asp-for="Employee.EmployeeServices" class="form-check-label" for="gridCheck1"></label>
-                                    </div>
+                            <div class="col-sm-4">
+                                <div class="form-check">
+                                    @*checked="@(e == Model?.Employee.Gender)"*@
+                                    <input asp-for="Employee.EmployeeServices" class="form-check-input" type="checkbox" id="@e" checked="@(Model?.Employee.EmployeeServices.FirstOrDefault(s => s.ServiceId == e.ServiceId))">
+                                    <label asp-for="Employee.EmployeeServices" class="form-check-label" for="gridCheck1"></label>
                                 </div>
-                            }
-                            
+
+                               @* <div class="form-check">
+                                    <input asp-for="Employee.HasAdminRights" class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label asp-for="Employee.HasAdminRights" class="form-check-label" for="gridCheck1">
+                                        Yes
+                                    </label>
+                                </div>*@
+                            </div>
+
                             <div class="col-sm-8">
                                 @e.ServiceName
                             </div>

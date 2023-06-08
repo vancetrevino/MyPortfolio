@@ -43,6 +43,7 @@ namespace Portfolio.Controllers
                 {
                     Employee = em
                 };
+                employeeVM.AllServices = _context.Services.ToList();
                 employeeViewModelList.Add(employeeVM);
             }
 
@@ -74,7 +75,9 @@ namespace Portfolio.Controllers
 
         [HttpPost]
         public IActionResult EditEmployee(Employee employee)
+        //public IActionResult EditEmployee(EmployeeViewModel employeeVM)
         {
+            //Employee employee = employeeVM.Employee;
             _context.Employees.Update(employee);
             _context.SaveChanges();
             return RedirectToAction("AdminEmployeesPage", "Admin");

@@ -1,9 +1,9 @@
-﻿@model Employee
+﻿@model EmployeeViewModel
 @{
 
 }
 
-<div class="modal fade" id="deleteEmployeeModal-@Model.EmployeeId" tabindex="-1" role="dialog" aria-labelledby="deleteEmployeeLabel" aria-hidden="true">
+<div class="modal fade" id="deleteEmployeeModal-@Model.Employee.EmployeeId" tabindex="-1" role="dialog" aria-labelledby="deleteEmployeeLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,7 +15,7 @@
             <div class="modal-body">
                 <form asp-controller="Admin" asp-action="DeleteEmployee" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="@Model.EmployeeId" />
+                    <input type="hidden" asp-for="@Model.Employee.EmployeeId" />
                     <div class="form-group my-1">
                         <p>Are you sure you want to remove this employee from the system?</p>
                         <p>This cannot be undone.</p>
